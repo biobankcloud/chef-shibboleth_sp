@@ -1,0 +1,6 @@
+dependencies: 
+  - recipe: shibboleth_sp::install
+  - recipe: shibboleth_sp::default
+    global:  
+      - kagent::default
+
