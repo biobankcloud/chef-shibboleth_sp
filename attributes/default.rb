@@ -3,12 +3,12 @@
 # Attributes:: default
 #
 
-default["shibboleth_sp"]["entityid_domain"] = "example.org"
-default["shibboleth_sp"]["entityid"] = ''
-default["shibboleth_sp"]["idp_entityid"] = "https://idp.example.org"
+default["shibboleth_sp"]["entityid_domain"] = ""
+default["shibboleth_sp"]["entityid"] = 'http://sp.hops.io'
+default["shibboleth_sp"]["idp_entityid"] = "https://idp.hops.io"
 default["shibboleth_sp"]["remote_metadata"] = []
 default["shibboleth_sp"]["local_metadata"] = []
-default["shibboleth_sp"]["protected_paths"] = []
+default["shibboleth_sp"]["protected_paths"] = ["/biobankcloud"]
 default["shibboleth_sp"]["optional_paths"] = []
 default["shibboleth_sp"]["cert_file"] = ''
 default["shibboleth_sp"]["key_file"] = ''

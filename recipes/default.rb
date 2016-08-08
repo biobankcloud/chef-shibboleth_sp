@@ -1,3 +1,4 @@
+
 template "/etc/yum.repos.d/shibboleth.repo" do
   mode "0644"
   source "shibboleth.repo.erb"
@@ -58,19 +59,34 @@ cookbook_file "/etc/shibboleth/shibd.te" do
   notifies :run, "script[shibd.te]", :immediately
 end
 
-if node['shibboleth_sp']['cert_file'] != ''
-  cookbook_file "/etc/shibboleth/sp-cert.pem" do
-    source node['shibboleth_sp']['cert_file']
-    mode "0644"
-  end
+# if node['shibboleth_sp']['cert_file'] != ''
+#   cookbook_file "/etc/shibboleth/sp-cert.pem" do
+#     source node['shibboleth_sp']['cert_file']
+#     mode "0644"
+#   end
+# end
+
+file "/etc/shibboleth/sp-key.pem" do
+#  owner node['shibboleth_sp']['user']
+  mode "0644"
+  content ::File.open("/var/lib/kagent/pub.pem").read
+  action :create
 end
-if node['shibboleth_sp']['key_file'] != ''
-  cookbook_file "/etc/shibboleth/sp-key.pem" do
-    source node['shibboleth_sp']['key_file']
-    owner node['shibboleth_sp']['user']
-    mode "0600"
-  end
+
+file "/etc/shibboleth/sp-cert.pem" do
+  owner node['shibboleth_sp']['user']
+  mode "0600"
+  content ::File.open("/var/lib/kagent/priv.key").read
+  action :create
 end
+
+# if node['shibboleth_sp']['key_file'] != ''
+#   cookbook_file "/etc/shibboleth/sp-key.pem" do
+#     source node['shibboleth_sp']['key_file']
+#     owner node['shibboleth_sp']['user']
+#     mode "0600"
+#   end
+# end
 
 script "shibd.te" do
   action :nothing
